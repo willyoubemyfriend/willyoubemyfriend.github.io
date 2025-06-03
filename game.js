@@ -13,6 +13,22 @@ playerImg.src = 'assets/player.png';
 const tileset = new Image();
 tileset.src = 'assets/tileset.png';
 
+const inventoryImg = new Image();
+inventoryImg.src = 'assets/inventory.png';
+
+let inventory = {
+  open: false,
+  y: canvas.height, // start off-screen
+  targetY: canvas.height,
+  currentPage: 0,
+  totalPages: 3,
+  transitioning: false,
+  direction: 0, // -1 for left, 1 for right
+  xOffset: 0
+};
+
+let canMove = true;
+
 const map = [
   [0,0,0,0,0,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,0],
@@ -38,8 +54,20 @@ let player = {
 
 // Track pressed keys
 const keys = {};
-window.addEventListener("keydown", (e) => keys[e.key] = true);
-window.addEventListener("keyup", (e) => keys[e.key] = false);
+window.addEventListener("keydown", (e) => {
+  if (e.key === "i") toggleInventory();
+  else if (inventory.open && !inventory.transitioning) {
+    if (e.key === ">") changeInventoryPage(1);
+    else if (e.key === "<") changeInventoryPage(-1);
+  } else {
+    keys[e.key] = true;
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
+
 
 function canMove(x, y) {
   return map[y] && map[y][x] !== 0;
@@ -47,6 +75,7 @@ function canMove(x, y) {
 
 function update() {
   // If player is not moving, check for input
+  if (inventory.open || inventory.transitioning || !canMove) return;
   if (!player.moving) {
     let dx = 0, dy = 0;
     if (keys["ArrowUp"]) dy = -1;
@@ -62,6 +91,12 @@ function update() {
       player.y = newY;
       player.dir = { x: dx * TILE_SIZE, y: dy * TILE_SIZE };
       player.moving = true;
+
+    if (inventory.y !== inventory.targetY) {
+      let dy = (inventory.targetY - inventory.y) * 0.2;
+      if (Math.abs(dy) < 1) inventory.y = inventory.targetY;
+      else inventory.y += dy;
+    }
     }
   }
 
@@ -102,7 +137,47 @@ function draw() {
 
   // Draw player (use px/py for smooth movement)
   ctx.drawImage(playerImg, player.px, player.py, TILE_SIZE, TILE_SIZE);
+
+  if (inventory.y < canvas.height) {
+  let offsetX = inventory.transitioning ? inventory.xOffset : 0;
+  ctx.drawImage(
+    inventoryImg,
+    0, 0, 160, 144,
+    offsetX, inventory.y, 160, 144
+  );
+
+  // Draw previous/next page sliding in/out
+  if (inventory.transitioning) {
+    const otherPageX = inventory.direction > 0 ? canvas.width : -canvas.width;
+    ctx.drawImage(
+      inventoryImg,
+      0, 0, 160, 144,
+      offsetX - inventory.direction * canvas.width, inventory.y, 160, 144
+    );
+  }
 }
+
+function toggleInventory() {
+  inventory.open = !inventory.open;
+  inventory.targetY = inventory.open ? (canvas.height - 120) / 2 : canvas.height;
+  canMove = !inventory.open;
+}
+
+function changeInventoryPage(dir) {
+  const newPage = inventory.currentPage + dir;
+  if (newPage < 0 || newPage >= inventory.totalPages) return;
+
+  inventory.transitioning = true;
+  inventory.direction = dir;
+  inventory.xOffset = dir * canvas.width;
+
+  setTimeout(() => {
+    inventory.currentPage = newPage;
+    inventory.transitioning = false;
+    inventory.xOffset = 0;
+  }, 200);
+}
+
 
 function gameLoop() {
   update();
