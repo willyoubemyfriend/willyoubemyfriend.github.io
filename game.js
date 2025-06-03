@@ -31,7 +31,7 @@ let player = {
   y: 1,
   px: 1 * TILE_SIZE,
   py: 1 * TILE_SIZE,
-  speed: 2, // pixels per frame
+  speed: 1, // pixels per frame
   moving: false,
   dir: null
 };
