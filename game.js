@@ -15,8 +15,20 @@ tileset.src = 'assets/tileset.png';
 const inventoryImg = new Image();
 inventoryImg.src = 'assets/inventory.png';
 
-const assets = [playerImg, tileset, inventoryImg];
+const playerImage = new Image();
+playerImage.src = 'assets/player_image.png';
+
+const assets = [playerImg, tileset, inventoryImg, playerImage];
 let assetsLoaded = 0;
+
+const playerStats = {
+    hp: 50,
+    attack: 5,
+    defense: 5,
+    dread: 15,
+    location: "Mossy Ruins",
+    description: "You need to take a shit."
+};
 
 // Wait until all assets are loaded
 assets.forEach(img => {
@@ -177,9 +189,43 @@ function draw() {
     ctx.drawImage(playerImg, player.px, player.py, TILE_SIZE, TILE_SIZE);
 
     if (inventory.visible || inventory.transitioning) {
-        ctx.drawImage(inventoryImg, 0, inventory.y, 160, 144);
+        // Draw the inventory background first
+        ctx.drawImage(inventoryImg, 0, inventory.y);
+    
+        // Then draw the correct page contents
+        if (inventory.page === 0) {
+            ctx.save();
+            ctx.translate(0, inventory.y);
+            drawInventoryPage1();
+            ctx.restore();
+        }
+    
+        // Later pages (1, 2, etc) go here
     }
+
 }
+
+function drawInventoryPage1() {
+    // Draw the player portrait
+    ctx.drawImage(playerImage, 16, 16);
+
+    // Text settings
+    ctx.fillStyle = "white";
+    ctx.font = "8px monospace";
+
+    // HP & Location under portrait
+    ctx.fillText(`HP: ${playerStats.hp}`, 16, 100);
+    ctx.fillText(`Location: ${playerStats.location}`, 16, 112);
+
+    // Description to the right
+    ctx.fillText(playerStats.description, 90, 24);
+
+    // Stats under description
+    ctx.fillText(`Attack: ${playerStats.attack}`, 90, 50);
+    ctx.fillText(`Defense: ${playerStats.defense}`, 90, 62);
+    ctx.fillText(`Dread: ${playerStats.dread}`, 90, 74);
+}
+
 
 function gameLoop() {
     update();
