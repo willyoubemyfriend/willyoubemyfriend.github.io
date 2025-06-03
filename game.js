@@ -55,14 +55,18 @@ let player = {
 // Track pressed keys
 const keys = {};
 window.addEventListener("keydown", (e) => {
-  if (e.key === "i") toggleInventory();
-  else if (inventory.open && !inventory.transitioning) {
-    if (e.key === ">") changeInventoryPage(1);
-    else if (e.key === "<") changeInventoryPage(-1);
+  const key = e.key.toLowerCase();
+
+  if (key === "i") {
+    toggleInventory();
+  } else if (inventory.open && !inventory.transitioning) {
+    if (key === ">") changeInventoryPage(1);
+    else if (key === "<") changeInventoryPage(-1);
   } else {
-    keys[e.key] = true;
+    keys[key] = true;
   }
 });
+
 
 window.addEventListener("keyup", (e) => {
   keys[e.key] = false;
@@ -74,14 +78,21 @@ function canMove(x, y) {
 }
 
 function update() {
-  // If player is not moving, check for input
+  // Inventory animation should happen always
+  if (inventory.y !== inventory.targetY) {
+    let dy = (inventory.targetY - inventory.y) * 0.2;
+    if (Math.abs(dy) < 1) inventory.y = inventory.targetY;
+    else inventory.y += dy;
+  }
+
   if (inventory.open || inventory.transitioning || !canMove) return;
+
   if (!player.moving) {
     let dx = 0, dy = 0;
-    if (keys["ArrowUp"]) dy = -1;
-    else if (keys["ArrowDown"]) dy = 1;
-    else if (keys["ArrowLeft"]) dx = -1;
-    else if (keys["ArrowRight"]) dx = 1;
+    if (keys["arrowup"]) dy = -1;
+    else if (keys["arrowdown"]) dy = 1;
+    else if (keys["arrowleft"]) dx = -1;
+    else if (keys["arrowright"]) dx = 1;
 
     const newX = player.x + dx;
     const newY = player.y + dy;
@@ -91,14 +102,27 @@ function update() {
       player.y = newY;
       player.dir = { x: dx * TILE_SIZE, y: dy * TILE_SIZE };
       player.moving = true;
-
-    if (inventory.y !== inventory.targetY) {
-      let dy = (inventory.targetY - inventory.y) * 0.2;
-      if (Math.abs(dy) < 1) inventory.y = inventory.targetY;
-      else inventory.y += dy;
-    }
     }
   }
+
+  if (player.moving) {
+    let targetX = player.x * TILE_SIZE;
+    let targetY = player.y * TILE_SIZE;
+
+    if (player.px < targetX) player.px += player.speed;
+    if (player.px > targetX) player.px -= player.speed;
+    if (player.py < targetY) player.py += player.speed;
+    if (player.py > targetY) player.py -= player.speed;
+
+    if (Math.abs(player.px - targetX) < player.speed &&
+        Math.abs(player.py - targetY) < player.speed) {
+      player.px = targetX;
+      player.py = targetY;
+      player.moving = false;
+    }
+  }
+}
+
 
   // Move toward target pixel location
   if (player.moving) {
