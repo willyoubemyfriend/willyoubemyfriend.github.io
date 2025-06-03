@@ -207,7 +207,7 @@ function draw() {
 
 function drawInventoryPage1() {
     // Draw the player portrait
-    ctx.drawImage(playerImage, 16, 16);
+    ctx.drawImage(playerImage, 0, 0);
 
     // Text settings
     ctx.fillStyle = "white";
