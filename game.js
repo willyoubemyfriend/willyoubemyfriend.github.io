@@ -61,7 +61,7 @@ let inventory = {
     targetY: 144,
     page: 0,
     maxPages: 3,
-    transitionSpeed: 4,
+    transitionSpeed: 6,
     transitioning: false
 };
 
