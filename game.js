@@ -238,7 +238,7 @@ function drawInventoryPage1() {
     // HP & Location under portrait
     ctx.fillText(`HP: `, 16, 110);
     ctx.font = '16px "friendfont"';
-    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,32, 110);
+    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,64, 108);
     ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
