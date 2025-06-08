@@ -240,9 +240,11 @@ function drawInventoryPage1() {
     ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
+    ctx.font = '6px "friendfont"';
     wrapText(ctx, playerStats.description, 90, 24, 60, 10);
 
     // Stats under description
+    ctx.font = '8px "Press Start 2P"';
     ctx.fillText(`ATT: ${playerStats.attack}`, 90, 74);
     ctx.fillText(`DEF: ${playerStats.defense}`, 90, 86);
     ctx.fillText(`DRD: ${playerStats.dread}`, 90, 98);
