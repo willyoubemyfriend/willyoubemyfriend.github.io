@@ -222,9 +222,9 @@ function drawInventoryPage1() {
     ctx.fillText(playerStats.description, 90, 24);
 
     // Stats under description
-    ctx.fillText(`Attack: ${playerStats.attack}`, 90, 50);
-    ctx.fillText(`Defense: ${playerStats.defense}`, 90, 62);
-    ctx.fillText(`Dread: ${playerStats.dread}`, 90, 74);
+    ctx.fillText(`ATT: ${playerStats.attack}`, 90, 50);
+    ctx.fillText(`DEF: ${playerStats.defense}`, 90, 62);
+    ctx.fillText(`DRD: ${playerStats.dread}`, 90, 74);
 }
 
 
