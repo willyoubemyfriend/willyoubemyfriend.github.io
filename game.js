@@ -28,7 +28,7 @@ const playerStats = {
     attack: 5,
     defense: 5,
     dread: 15,
-    location: "Ö Cum Dungeon",
+    location: "Ö CUM DUNGEON",
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
 
