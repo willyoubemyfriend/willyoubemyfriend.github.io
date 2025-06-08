@@ -23,6 +23,7 @@ const assets = [playerImg, tileset, inventoryImg, playerImage];
 let assetsLoaded = 0;
 
 const playerStats = {
+    name: "Googar",
     hp: 50,
     maxhp:50,
     attack: 5,
@@ -237,6 +238,7 @@ function drawInventoryPage1() {
 
     // HP & Location under portrait
     ctx.fillText(`HP: `, 16, 118);
+    ctx.fillText(`${playerStats.name}`,16, 112);
     ctx.font = '16px "friendfont"';
     ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,48, 117);
     ctx.fillText(`${playerStats.location}`, 16, 128);
