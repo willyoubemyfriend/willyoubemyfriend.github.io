@@ -18,6 +18,11 @@ body {
   src: url('assets/press-start-2p.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'friendfont';
+  src: url('friendfont.ttf') format('truetype');
+}
+
 canvas {
   width: 100%;
   height: 100%;
