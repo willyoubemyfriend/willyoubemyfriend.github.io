@@ -27,7 +27,7 @@ const playerStats = {
     attack: 5,
     defense: 5,
     dread: 15,
-    location: "Mossy Ruins",
+    location: "Cum Dungeon",
     description: "You need to take a shit."
 };
 
@@ -215,8 +215,8 @@ function drawInventoryPage1() {
     ctx.font = '8px "Press Start 2P"';
 
     // HP & Location under portrait
-    ctx.fillText(`HP: ${playerStats.hp}`, 16, 100);
-    ctx.fillText(`Location: ${playerStats.location}`, 16, 112);
+    ctx.fillText(`HP: ${playerStats.hp}`, 16, 110);
+    ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
     ctx.fillText(playerStats.description, 90, 24);
