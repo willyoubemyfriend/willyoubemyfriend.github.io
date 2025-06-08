@@ -238,17 +238,17 @@ function drawInventoryPage1() {
     // HP & Location under portrait
     ctx.fillText(`HP: `, 16, 110);
     ctx.font = '16px "friendfont"';
-    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,48, 109);
-    ctx.fillText(`${playerStats.location}`, 16, 122);
+    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,48, 115);
+    ctx.fillText(`${playerStats.location}`, 16, 128);
 
     // Description to the right
-    wrapText(ctx, playerStats.description, 90, 24, 60, 10);
+    wrapText(ctx, playerStats.description, 88, 24, 60, 10);
 
     // Stats under description
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(`ATT: ${playerStats.attack}`, 90, 74);
-    ctx.fillText(`DEF: ${playerStats.defense}`, 90, 86);
-    ctx.fillText(`DRD: ${playerStats.dread}`, 90, 98);
+    ctx.fillText(`ATT: ${playerStats.attack}`, 88, 74);
+    ctx.fillText(`DEF: ${playerStats.defense}`, 88, 86);
+    ctx.fillText(`DRD: ${playerStats.dread}`, 88, 98);
 }
 
 function gameLoop() {
