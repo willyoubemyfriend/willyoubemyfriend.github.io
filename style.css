@@ -20,7 +20,7 @@ body {
 
 @font-face {
   font-family: 'friendfont';
-  src: url('friendfont.ttf') format('truetype');
+  src: url('assets/friendfont.ttf') format('truetype');
 }
 
 canvas {
