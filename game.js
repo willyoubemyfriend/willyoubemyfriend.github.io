@@ -24,6 +24,7 @@ let assetsLoaded = 0;
 
 const playerStats = {
     hp: 50,
+    maxhp:50,
     attack: 5,
     defense: 5,
     dread: 15,
@@ -215,7 +216,7 @@ function drawInventoryPage1() {
     ctx.font = '8px "Press Start 2P"';
 
     // HP & Location under portrait
-    ctx.fillText(`HP: ${playerStats.hp}`, 16, 110);
+    ctx.fillText(`HP: ${playerStats.hp}/${playerStats.maxhp}`, 16, 110);
     ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
