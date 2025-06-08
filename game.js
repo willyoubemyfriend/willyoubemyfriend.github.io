@@ -29,7 +29,7 @@ const playerStats = {
     defense: 5,
     dread: 15,
     location: "Ö Cum Dungeon",
-    description: "You need to take a shit."
+    description: "You feel the intense desire to take a shit."
 };
 
 // Wait until all assets are loaded
