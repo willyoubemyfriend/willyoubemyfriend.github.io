@@ -207,6 +207,26 @@ function draw() {
 
 }
 
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+
+    if (testWidth > maxWidth && n > 0) {
+      ctx.fillText(line, x, y);
+      line = words[n] + ' ';
+      y += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line, x, y);
+}
+
+
 function drawInventoryPage1() {
     // Draw the player portrait
     ctx.drawImage(playerImage, 0, 0);
@@ -220,14 +240,13 @@ function drawInventoryPage1() {
     ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
-    ctx.fillText(playerStats.description, 90, 24);
+    wrapText(ctx, playerStats.description, 90, 24, 60, 10);
 
     // Stats under description
     ctx.fillText(`ATT: ${playerStats.attack}`, 90, 74);
     ctx.fillText(`DEF: ${playerStats.defense}`, 90, 86);
     ctx.fillText(`DRD: ${playerStats.dread}`, 90, 98);
 }
-
 
 function gameLoop() {
     update();
