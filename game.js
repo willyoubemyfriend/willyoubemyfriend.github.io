@@ -246,9 +246,9 @@ function drawInventoryPage1() {
 
     // Stats under description
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(`ATT: ${playerStats.attack}`, 88, 74);
-    ctx.fillText(`DEF: ${playerStats.defense}`, 88, 86);
-    ctx.fillText(`DRD: ${playerStats.dread}`, 88, 98);
+    ctx.fillText(`ATT: ${playerStats.attack}`, 88, 73);
+    ctx.fillText(`DEF: ${playerStats.defense}`, 88, 85);
+    ctx.fillText(`DRD: ${playerStats.dread}`, 88, 97);
 }
 
 function gameLoop() {
