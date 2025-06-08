@@ -28,7 +28,7 @@ const playerStats = {
     attack: 5,
     defense: 5,
     dread: 15,
-    location: "ÖCum Dungeon",
+    location: "Ö Cum Dungeon",
     description: "You need to take a shit."
 };
 
