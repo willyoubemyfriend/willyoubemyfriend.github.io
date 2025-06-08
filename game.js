@@ -240,7 +240,7 @@ function drawInventoryPage1() {
     ctx.fillText(`${playerStats.location}`, 16, 122);
 
     // Description to the right
-    ctx.font = '12px "friendfont"';
+    ctx.font = '16px "friendfont"';
     wrapText(ctx, playerStats.description, 90, 24, 60, 10);
 
     // Stats under description
