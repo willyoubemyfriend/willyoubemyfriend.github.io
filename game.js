@@ -211,7 +211,7 @@ function drawInventoryPage1() {
 
     // Text settings
     ctx.fillStyle = "white";
-    ctx.font = "8px monospace";
+    ctx.font = '8px "Press Start 2P"';
 
     // HP & Location under portrait
     ctx.fillText(`HP: ${playerStats.hp}`, 16, 100);
