@@ -162,11 +162,10 @@ function update() {
             player.x = nx;
             player.y = ny;
             player.moving = true;
-    enemyAnimTimer++;
-    if (enemyAnimTimer >= ENEMY_ANIM_INTERVAL) {
-        enemyAnimTimer = 0;
-        enemies.forEach(e => e.frame = e.frame === 0 ? 1 : 0);
-    }
+        enemyAnimTimer++;
+        if (enemyAnimTimer >= ENEMY_ANIM_INTERVAL) {
+            enemyAnimTimer = 0;
+            enemies.forEach(e => e.frame = e.frame === 0 ? 1 : 0);
         }
     }
 
@@ -286,45 +285,46 @@ function drawInventoryPage3() {
 
     for (let i = 0; i < ENEMY_COUNT; i++) {
         const enemy = enemies[i];
-        const col = Math.floor(i / 7); // 0 to 3
-        const row = i % 7;
+        const col = Math.floor(i / 7); // columns 0-3
+        const row = i % 7;             // rows 0-6
 
         const iconX = col * 64;
         const iconY = row * 16;
 
-        // Draw enemy icon
         if (enemy.seen) {
+            // Draw animated enemy icon (2 frames, side-by-side)
             ctx.drawImage(
                 enemyIcons,
-                enemy.frame * 16, // frame 0 or 1
-                i * 16,
+                enemy.frame * 16,    // source X: frame 0 or 1
+                i * 16,              // source Y: row in spritesheet
                 16, 16,
                 iconX, iconY,
                 16, 16
             );
         } else {
-            // Draw question mark icon at end of sprite sheet
+            // Draw static question mark icon from bottom of sprite sheet
             ctx.drawImage(
                 enemyIcons,
-                2 * 16, // frame 2 (the question mark)
-                ENEMY_COUNT * 16,
+                0,                 // first column of question mark
+                ENEMY_COUNT * 16,  // after last enemy (i = 28)
                 16, 16,
                 iconX, iconY,
                 16, 16
             );
         }
 
-        // Draw status icon
+        // Draw status icon (3 types horizontally arranged)
         const statusMap = {
             'undecided': 0,
             'closure': 1,
             'new_life': 2
         };
 
+        const statusIndex = statusMap[enemy.status];
+
         ctx.drawImage(
             enemyStatuses,
-            statusMap[enemy.status] * 16,
-            0,
+            statusIndex * 16, 0,  // status icons are on the same row
             16, 16,
             iconX + 16, iconY,
             16, 16
