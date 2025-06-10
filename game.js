@@ -43,6 +43,8 @@ const playerStats = {
 };
 
 const seenEnemies = Array(28).fill(false);  // all enemies start as not seen
+seenEnemies[0] = true;
+
 const enemyStatuses = Array(28).fill("undecided");
 
 // Wait until all assets are loaded
