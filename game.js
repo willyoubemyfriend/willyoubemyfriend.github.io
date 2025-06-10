@@ -22,13 +22,13 @@ playerImage.src = 'assets/player_image.png';
 const enemyIcons = new Image();
 enemyIcons.src = 'assets/enemy_icons.png';
 
-const enemyStatuses = new Image();
+const enemyStatusesImg = new Image();
 enemyStatuses.src = 'assets/enemy_statuses.png';
 
 const creatureGrid = new Image();
 creatureGrid.src = 'assets/creature_grid.png';
 
-const assets = [playerImg, tileset, inventoryImg, playerImage, enemyIcons, enemyStatuses, creatureGrid];
+const assets = [playerImg, tileset, inventoryImg, playerImage, enemyIcons, enemyStatusesImg, creatureGrid];
 let assetsLoaded = 0;
 
 const playerStats = {
