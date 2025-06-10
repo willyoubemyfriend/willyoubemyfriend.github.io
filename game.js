@@ -1,7 +1,7 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
-// I SWEAR TO FUCKING GOD I'M GOING TO KILL MYSELF
+
 
 const TILE_SIZE = 16;
 const MAP_WIDTH = 10;
@@ -237,21 +237,21 @@ function drawInventoryPage1() {
     ctx.font = '8px "Press Start 2P"';
 
     // HP & Location under portrait
-    ctx.fillText(HP: ${playerStats.hp}/${playerStats.maxhp}, 16, 110);
-    ctx.fillText(${playerStats.location}, 16, 122);
+    ctx.fillText(`HP: ${playerStats.hp}/${playerStats.maxhp}`, 16, 110);
+    ctx.fillText(`${playerStats.location}`, 16, 122);
     
     ctx.font = '16px "friendfont"';
-    ctx.fillText(${playerStats.hp}/${playerStats.maxhp},48, 118);
-    ctx.fillText(${playerStats.location}, 16, 128);
+    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,48, 118);
+    ctx.fillText(`${playerStats.location}`, 16, 128);
 
     // Description to the right
     wrapText(ctx, playerStats.description, 88, 24, 60, 10);
 
     // Stats under description
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(ATT: ${playerStats.attack}, 88, 73);
-    ctx.fillText(DEF: ${playerStats.defense}, 88, 85);
-    ctx.fillText(DRD: ${playerStats.dread}, 88, 97);
+    ctx.fillText(`ATT: ${playerStats.attack}`, 88, 73);
+    ctx.fillText(`DEF: ${playerStats.defense}`, 88, 85);
+    ctx.fillText(`DRD: ${playerStats.dread}`, 88, 97);
 }
 
 function gameLoop() {
