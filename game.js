@@ -19,7 +19,16 @@ inventoryImg.src = 'assets/inventory.png';
 const playerImage = new Image();
 playerImage.src = 'assets/player_image.png';
 
-const assets = [playerImg, tileset, inventoryImg, playerImage];
+const creatureGrid = new Image();
+creatureGrid.src = 'assets/creature_grid.png';
+
+const enemyIcons = new Image();
+enemyIcons.src = 'assets/enemy_icons.png';
+
+const enemyStatuses = new Image();
+enemyStatuses.src = 'assets/enemy_statuses.png';
+
+const assets = [playerImg, tileset, inventoryImg, playerImage, creatureGrid, enemyIcons, enemyStatuses];
 let assetsLoaded = 0;
 
 const playerStats = {
@@ -32,6 +41,17 @@ const playerStats = {
     location: "Ö CUM DUNGEON",
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
+
+const ENEMY_COUNT = 28;
+
+const enemies = Array.from({ length: ENEMY_COUNT }, (_, i) => ({
+    seen: false, // set to true when seen in-game
+    status: 'undecided', // can be 'undecided', 'closure', or 'new_life'
+    frame: 0 // animation frame
+}));
+
+let enemyAnimTimer = 0;
+const ENEMY_ANIM_INTERVAL = 20; // frames between swaps
 
 // Wait until all assets are loaded
 assets.forEach(img => {
@@ -143,6 +163,11 @@ function update() {
             player.x = nx;
             player.y = ny;
             player.moving = true;
+    enemyAnimTimer++;
+    if (enemyAnimTimer >= ENEMY_ANIM_INTERVAL) {
+        enemyAnimTimer = 0;
+        enemies.forEach(e => e.frame = e.frame === 0 ? 1 : 0);
+    }
         }
     }
 
@@ -196,11 +221,15 @@ function draw() {
         ctx.drawImage(inventoryImg, 0, inventory.y);
     
         // Then draw the correct page contents
+        ctx.save();
+        ctx.translate(0, inventory.y);
         if (inventory.page === 0) {
-            ctx.save();
-            ctx.translate(0, inventory.y);
             drawInventoryPage1();
-            ctx.restore();
+        } else if (inventory.page === 2) {
+            drawInventoryPage3();
+        }
+        ctx.restore();
+
         }
     
         // Later pages (1, 2, etc) go here
@@ -252,6 +281,58 @@ function drawInventoryPage1() {
     ctx.fillText(`DEF: ${playerStats.defense}`, 88, 85);
     ctx.fillText(`DRD: ${playerStats.dread}`, 88, 97);
 }
+
+function drawInventoryPage3() {
+    ctx.drawImage(creatureGrid, 0, 0);
+
+    for (let i = 0; i < ENEMY_COUNT; i++) {
+        const enemy = enemies[i];
+        const col = Math.floor(i / 7); // 0 to 3
+        const row = i % 7;
+
+        const iconX = col * 64;
+        const iconY = row * 16;
+
+        // Draw enemy icon
+        if (enemy.seen) {
+            ctx.drawImage(
+                enemyIcons,
+                enemy.frame * 16, // frame 0 or 1
+                i * 16,
+                16, 16,
+                iconX, iconY,
+                16, 16
+            );
+        } else {
+            // Draw question mark icon at end of sprite sheet
+            ctx.drawImage(
+                enemyIcons,
+                2 * 16, // frame 2 (the question mark)
+                ENEMY_COUNT * 16,
+                16, 16,
+                iconX, iconY,
+                16, 16
+            );
+        }
+
+        // Draw status icon
+        const statusMap = {
+            'undecided': 0,
+            'closure': 1,
+            'new_life': 2
+        };
+
+        ctx.drawImage(
+            enemyStatuses,
+            statusMap[enemy.status] * 16,
+            0,
+            16, 16,
+            iconX + 16, iconY,
+            16, 16
+        );
+    }
+}
+
 
 function gameLoop() {
     update();
