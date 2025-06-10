@@ -275,6 +275,10 @@ function drawInventoryPage1() {
     ctx.fillText(`DRD: ${playerStats.dread}`, 88, 97);
 }
 
+function drawInventoryPage3() {
+    ctx.drawImage(creatureGrid, 0, 0);
+}
+
 function gameLoop() {
     update();
     draw();
