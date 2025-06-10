@@ -1,7 +1,7 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
-
+// I SWEAR TO FUCKING GOD I'M GOING TO KILL MYSELF
 
 const TILE_SIZE = 16;
 const MAP_WIDTH = 10;
