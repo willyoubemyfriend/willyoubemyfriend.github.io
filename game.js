@@ -308,7 +308,7 @@ function drawInventoryPage3() {
             enemyStatusesImg,
             statusIndex * 16, 0,      // src x/y
             16, 16,                   // size
-            x + 16, y,                // dest x/y (right next to enemy)
+            x + 15, y,                // dest x/y (right next to enemy)
             16, 16
         );
     }
