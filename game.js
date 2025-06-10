@@ -43,6 +43,7 @@ const playerStats = {
 };
 
 const seenEnemies = Array(28).fill(false);  // all enemies start as not seen
+const enemyStatuses = Array(28).fill("undecided");
 
 // Wait until all assets are loaded
 assets.forEach(img => {
@@ -285,17 +286,34 @@ function drawInventoryPage3() {
         const x = 16 + col * 32;
         const y = 16 + row * 16;
 
-        let spriteIndex = seenEnemies[i] ? i : 28; // 0–27 for enemies, 28 for question mark
+        // Draw enemy icon
+        let spriteIndex = seenEnemies[i] ? i : 28; // 0–27 = enemy, 28 = ?
         ctx.drawImage(
             enemyIcons,
-            spriteIndex * 16,       // source x
-            enemyFrame * 16,        // source y (0 or 1 row)
-            16, 16,                 // source size
-            x, y,                   // destination x, y
-            16, 16                  // destination size
+            spriteIndex * 16,
+            enemyFrame * 16,
+            16, 16,
+            x, y,
+            16, 16
+        );
+
+        // Determine status icon index
+        let status = enemyStatuses[i]; // "undecided", "closure", "newlife"
+        let statusIndex = 0;
+        if (status === "closure") statusIndex = 1;
+        else if (status === "newlife") statusIndex = 2;
+
+        // Draw status icon to the right of the enemy icon
+        ctx.drawImage(
+            enemyStatusesImg,
+            statusIndex * 16, 0,      // src x/y
+            16, 16,                   // size
+            x + 16, y,                // dest x/y (right next to enemy)
+            16, 16
         );
     }
 }
+
 
 let enemyFrame = 0;
 let frameCounter = 0;
