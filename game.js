@@ -200,7 +200,7 @@ function update() {
         frameCounter = 0;
     }
 
-    enemyAnimTimer += 10; // ~1 frame at 60fps
+    enemyAnimTimer += 6; // ~1 frame at 60fps
     if (enemyAnimTimer >= enemyAnimInterval) {
         enemyAnimTimer = 0;
         enemyAnimFrame = (enemyAnimFrame + 1) % 2; // Toggle between 0 and 1
