@@ -217,7 +217,13 @@ function draw() {
             ctx.translate(0, inventory.y);
             drawInventoryPage1();
             ctx.restore();
+        } else if (inventory.page === 2) {
+            ctx.save();
+            ctx.translate(0, inventory.y);
+            drawInventoryPage3();  // <- this will be the creature grid page
+            ctx.restore();
         }
+
     
         // Later pages (1, 2, etc) go here
     }
