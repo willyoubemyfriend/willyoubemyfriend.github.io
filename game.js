@@ -42,11 +42,8 @@ const playerStats = {
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
 
-const seenEnemies = Array(28).fill(false);  // all enemies start as not seen
-seenEnemies[0] = true;
-
-const enemyStatuses = Array(28).fill("undecided");
-enemyStatuses[0] = "closure";
+const seenEnemies = Array(28).fill(true);  // all enemies start as not seen
+const enemyStatuses = Array(28).fill("newlife");
 
 
 // Wait until all assets are loaded
