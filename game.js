@@ -217,22 +217,19 @@ function draw() {
     if (inventory.visible || inventory.transitioning) {
         // Draw the inventory background first
         ctx.drawImage(inventoryImg, 0, inventory.y);
-    
+
         // Then draw the correct page contents
         ctx.save();
         ctx.translate(0, inventory.y);
+
         if (inventory.page === 0) {
             drawInventoryPage1();
         } else if (inventory.page === 2) {
             drawInventoryPage3();
         }
+
         ctx.restore();
-
-        }
-    
-        // Later pages (1, 2, etc) go here
     }
-
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
