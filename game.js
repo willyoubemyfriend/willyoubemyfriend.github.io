@@ -2,6 +2,7 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
+
 const TILE_SIZE = 16;
 const MAP_WIDTH = 10;
 const MAP_HEIGHT = 9;
@@ -18,16 +19,7 @@ inventoryImg.src = 'assets/inventory.png';
 const playerImage = new Image();
 playerImage.src = 'assets/player_image.png';
 
-const creatureGrid = new Image();
-creatureGrid.src = 'assets/creature_grid.png';
-
-const enemyIcons = new Image();
-enemyIcons.src = 'assets/enemy_icons.png';
-
-const enemyStatuses = new Image();
-enemyStatuses.src = 'assets/enemy_statuses.png';
-
-const assets = [playerImg, tileset, inventoryImg, playerImage, creatureGrid, enemyIcons, enemyStatuses];
+const assets = [playerImg, tileset, inventoryImg, playerImage];
 let assetsLoaded = 0;
 
 const playerStats = {
@@ -40,17 +32,6 @@ const playerStats = {
     location: "Ö CUM DUNGEON",
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
-
-const ENEMY_COUNT = 28;
-
-const enemies = Array.from({ length: ENEMY_COUNT }, (_, i) => ({
-    seen: false, // set to true when seen in-game
-    status: 'undecided', // can be 'undecided', 'closure', or 'new_life'
-    frame: 0 // animation frame
-}));
-
-let enemyAnimTimer = 0;
-const ENEMY_ANIM_INTERVAL = 20; // frames between swaps
 
 // Wait until all assets are loaded
 assets.forEach(img => {
@@ -162,10 +143,6 @@ function update() {
             player.x = nx;
             player.y = ny;
             player.moving = true;
-        enemyAnimTimer++;
-        if (enemyAnimTimer >= ENEMY_ANIM_INTERVAL) {
-            enemyAnimTimer = 0;
-            enemies.forEach(e => e.frame = e.frame === 0 ? 1 : 0);
         }
     }
 
@@ -217,19 +194,18 @@ function draw() {
     if (inventory.visible || inventory.transitioning) {
         // Draw the inventory background first
         ctx.drawImage(inventoryImg, 0, inventory.y);
-
+    
         // Then draw the correct page contents
-        ctx.save();
-        ctx.translate(0, inventory.y);
-
         if (inventory.page === 0) {
+            ctx.save();
+            ctx.translate(0, inventory.y);
             drawInventoryPage1();
-        } else if (inventory.page === 2) {
-            drawInventoryPage3();
+            ctx.restore();
         }
-
-        ctx.restore();
+    
+        // Later pages (1, 2, etc) go here
     }
+
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -261,74 +237,21 @@ function drawInventoryPage1() {
     ctx.font = '8px "Press Start 2P"';
 
     // HP & Location under portrait
-    ctx.fillText(`HP: `, 16, 119);
-    ctx.fillText(`${playerStats.name}`,16, 108);
+    ctx.fillText(HP: , 16, 119);
+    ctx.fillText(${playerStats.name},16, 108);
     ctx.font = '16px "friendfont"';
-    ctx.fillText(`${playerStats.hp}/${playerStats.maxhp}`,48, 118);
-    ctx.fillText(`${playerStats.location}`, 16, 128);
+    ctx.fillText(${playerStats.hp}/${playerStats.maxhp},48, 118);
+    ctx.fillText(${playerStats.location}, 16, 128);
 
     // Description to the right
     wrapText(ctx, playerStats.description, 88, 24, 60, 10);
 
     // Stats under description
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(`ATT: ${playerStats.attack}`, 88, 73);
-    ctx.fillText(`DEF: ${playerStats.defense}`, 88, 85);
-    ctx.fillText(`DRD: ${playerStats.dread}`, 88, 97);
+    ctx.fillText(ATT: ${playerStats.attack}, 88, 73);
+    ctx.fillText(DEF: ${playerStats.defense}, 88, 85);
+    ctx.fillText(DRD: ${playerStats.dread}, 88, 97);
 }
-
-function drawInventoryPage3() {
-    ctx.drawImage(creatureGrid, 0, 0);
-
-    for (let i = 0; i < ENEMY_COUNT; i++) {
-        const enemy = enemies[i];
-        const col = Math.floor(i / 7); // columns 0-3
-        const row = i % 7;             // rows 0-6
-
-        const iconX = col * 64;
-        const iconY = row * 16;
-
-        if (enemy.seen) {
-            // Draw animated enemy icon (2 frames, side-by-side)
-            ctx.drawImage(
-                enemyIcons,
-                enemy.frame * 16,    // source X: frame 0 or 1
-                i * 16,              // source Y: row in spritesheet
-                16, 16,
-                iconX, iconY,
-                16, 16
-            );
-        } else {
-            // Draw static question mark icon from bottom of sprite sheet
-            ctx.drawImage(
-                enemyIcons,
-                0,                 // first column of question mark
-                ENEMY_COUNT * 16,  // after last enemy (i = 28)
-                16, 16,
-                iconX, iconY,
-                16, 16
-            );
-        }
-
-        // Draw status icon (3 types horizontally arranged)
-        const statusMap = {
-            'undecided': 0,
-            'closure': 1,
-            'new_life': 2
-        };
-
-        const statusIndex = statusMap[enemy.status];
-
-        ctx.drawImage(
-            enemyStatuses,
-            statusIndex * 16, 0,  // status icons are on the same row
-            16, 16,
-            iconX + 16, iconY,
-            16, 16
-        );
-    }
-}
-
 
 function gameLoop() {
     update();
