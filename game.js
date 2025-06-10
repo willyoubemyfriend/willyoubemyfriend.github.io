@@ -76,7 +76,7 @@ let gameState = {
 
 let enemyAnimTimer = 0;
 let enemyAnimFrame = 0;
-const enemyAnimInterval = 500; // Change frame every 500ms
+const enemyAnimInterval = 250; // Change frame every 500ms
 
 let player = {
     x: 1,
@@ -195,7 +195,7 @@ function update() {
         }
     }
     frameCounter++;
-    if (frameCounter >= 20) {  // change frame every ~0.5s
+    if (frameCounter >= 30) {  // change frame every ~0.5s
         enemyFrame = (enemyFrame + 1) % 2;
         frameCounter = 0;
     }
