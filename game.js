@@ -282,8 +282,8 @@ function drawInventoryPage3() {
         const row = i % 7;
         const col = Math.floor(i / 7);
 
-        const x = col * 40 + 8;   // Leave padding from grid edges
-        const y = row * 20 + 8;
+        const x = 16 + col * 32;
+        const y = 16 + row * 16;
 
         let spriteIndex = seenEnemies[i] ? i : 28; // 0–27 for enemies, 28 for question mark
         ctx.drawImage(
