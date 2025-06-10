@@ -19,7 +19,16 @@ inventoryImg.src = 'assets/inventory.png';
 const playerImage = new Image();
 playerImage.src = 'assets/player_image.png';
 
-const assets = [playerImg, tileset, inventoryImg, playerImage];
+const enemyIcons = new Image();
+enemyIcons.src = 'assets/enemy_icons.png';
+
+const enemyStatuses = new Image();
+enemyStatuses.src = 'assets/enemy_statuses.png';
+
+const creatureGrid = new Image();
+creatureGrid.src = 'assets/creature_grid.png';
+
+const assets = [playerImg, tileset, inventoryImg, playerImage, enemyIcons, enemyStatuses, creatureGrid];
 let assetsLoaded = 0;
 
 const playerStats = {
@@ -32,6 +41,13 @@ const playerStats = {
     location: "Ö CUM DUNGEON",
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
+
+const ENEMY_COUNT = 28;
+
+const enemies = Array.from({ length: ENEMY_COUNT }, () => ({
+    seen: false,
+    status: "undecided" // Can be "undecided", "closure", or "new_life"
+}));
 
 // Wait until all assets are loaded
 assets.forEach(img => {
