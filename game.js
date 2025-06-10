@@ -23,7 +23,7 @@ const enemyIcons = new Image();
 enemyIcons.src = 'assets/enemy_icons.png';
 
 const enemyStatusesImg = new Image();
-enemyStatuses.src = 'assets/enemy_statuses.png';
+enemyStatusesImg.src = 'assets/enemy_statuses.png';
 
 const creatureGrid = new Image();
 creatureGrid.src = 'assets/creature_grid.png';
