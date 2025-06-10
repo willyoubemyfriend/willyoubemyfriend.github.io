@@ -42,12 +42,7 @@ const playerStats = {
     description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
 };
 
-const ENEMY_COUNT = 28;
-
-const enemies = Array.from({ length: ENEMY_COUNT }, () => ({
-    seen: false,
-    status: "undecided" // Can be "undecided", "closure", or "new_life"
-}));
+const seenEnemies = Array(28).fill(false);  // all enemies start as not seen
 
 // Wait until all assets are loaded
 assets.forEach(img => {
@@ -193,6 +188,11 @@ function update() {
             inventory.y += (inventory.y < inventory.targetY ? 1 : -1) * inventory.transitionSpeed;
         }
     }
+    frameCounter++;
+    if (frameCounter >= 30) {  // change frame every ~0.5s
+        enemyFrame = (enemyFrame + 1) % 2;
+        frameCounter = 0;
+    }
 }
 
 function draw() {
@@ -277,7 +277,28 @@ function drawInventoryPage1() {
 
 function drawInventoryPage3() {
     ctx.drawImage(creatureGrid, 0, 0);
+
+    for (let i = 0; i < 28; i++) {
+        const row = i % 7;
+        const col = Math.floor(i / 7);
+
+        const x = col * 40 + 8;   // Leave padding from grid edges
+        const y = row * 20 + 8;
+
+        let spriteIndex = seenEnemies[i] ? i : 28; // 0–27 for enemies, 28 for question mark
+        ctx.drawImage(
+            enemyIcons,
+            spriteIndex * 16,       // source x
+            enemyFrame * 16,        // source y (0 or 1 row)
+            16, 16,                 // source size
+            x, y,                   // destination x, y
+            16, 16                  // destination size
+        );
+    }
 }
+
+let enemyFrame = 0;
+let frameCounter = 0;
 
 function gameLoop() {
     update();
