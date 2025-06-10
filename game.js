@@ -46,6 +46,8 @@ const seenEnemies = Array(28).fill(false);  // all enemies start as not seen
 seenEnemies[0] = true;
 
 const enemyStatuses = Array(28).fill("undecided");
+enemyStatuses[0] = "closure";
+
 
 // Wait until all assets are loaded
 assets.forEach(img => {
