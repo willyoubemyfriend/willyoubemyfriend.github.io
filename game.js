@@ -195,12 +195,12 @@ function update() {
         }
     }
     frameCounter++;
-    if (frameCounter >= 12) {  // change frame every ~0.5s
+    if (frameCounter >= 14) {  // change frame every ~0.5s
         enemyFrame = (enemyFrame + 1) % 2;
         frameCounter = 0;
     }
 
-    enemyAnimTimer += 12; // ~1 frame at 60fps
+    enemyAnimTimer += 14; // ~1 frame at 60fps
     if (enemyAnimTimer >= enemyAnimInterval) {
         enemyAnimTimer = 0;
         enemyAnimFrame = (enemyAnimFrame + 1) % 2; // Toggle between 0 and 1
