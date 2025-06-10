@@ -43,7 +43,7 @@ const playerStats = {
 };
 
 const seenEnemies = Array(28).fill(true);  // all enemies start as not seen
-const enemyStatuses = Array(28).fill("newlife");
+const enemyStatuses = Array(28).fill("closure");
 
 
 // Wait until all assets are loaded
