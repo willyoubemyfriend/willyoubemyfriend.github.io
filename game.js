@@ -102,7 +102,7 @@ const roomExits = [
             direction: "right",
             toRoom: 1,
             toX: 0, toY: 3,
-            roomgap: 0
+            roomgap: 160
         },
         {
             x: 6, y: -1,
