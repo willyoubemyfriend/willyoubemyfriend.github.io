@@ -129,7 +129,7 @@ const roomExits = [
 ];
 
 
-let currentRoomIndex = 0;
+let currentRoomIndex = 2;
 
 let gameState = {
     mode: 'overworld', // or 'inventory'
