@@ -257,7 +257,7 @@ function update() {
         enemyAnimFrame = (enemyAnimFrame + 1) % 2; // Toggle between 0 and 1
     }
 
-
+}
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
