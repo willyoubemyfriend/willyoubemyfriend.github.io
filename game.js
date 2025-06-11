@@ -57,6 +57,7 @@ assets.forEach(img => {
 });
 
 const rooms = [
+    // Room 1
     [
         [0,0,0,0,0,0,0,0,0,0],
         [0,1,1,1,1,1,1,1,1,0],
@@ -68,6 +69,7 @@ const rooms = [
         [0,1,1,1,1,1,1,1,1,0],
         [0,0,0,0,0,0,0,0,0,0]
     ],
+    // Room 2
     [
         [0,0,0,0,0,0,0,0,0,0],
         [0,1,1,1,0,0,1,1,1,0],
@@ -80,6 +82,26 @@ const rooms = [
         [0,0,0,0,0,0,0,0,0,0]
     ]
 ];
+
+const roomExits = [
+    [ // Exits for Room 0
+        {
+            x: 10, y: 4,
+            direction: "right",
+            toRoom: 1,
+            toX: 0, toY: 4
+        }
+    ],
+    [ // Exits for Room 1
+        {
+            x: 0, y: 4,
+            direction: "left",
+            toRoom: 0,
+            toX: 10, toY: 4
+        }
+    ]
+];
+
 
 let currentRoomIndex = 0;
 
@@ -170,11 +192,31 @@ function update() {
         let nx = player.x + dx;
         let ny = player.y + dy;
 
-        if ((dx !== 0 || dy !== 0) && canMove(nx, ny)) {
-            player.x = nx;
-            player.y = ny;
-            player.moving = true;
-        }
+        if ((dx !== 0 || dy !== 0)) {
+            const dir = dx === 1 ? "right" :
+                dx === -1 ? "left" :
+                dy === 1 ? "down" :
+                dy === -1 ? "up" : "";
+
+    const exits = roomExits[currentRoomIndex];
+    const exit = exits.find(e => e.x === player.x && e.y === player.y && e.direction === dir);
+
+    if (exit) {
+        // Room change logic
+        currentRoomIndex = exit.toRoom;
+        player.x = exit.toX;
+        player.y = exit.toY;
+        player.px = player.x * TILE_SIZE;
+        player.py = player.y * TILE_SIZE;
+        player.moving = false; // no smooth movement needed
+    } else if (canMove(nx, ny)) {
+        // Regular move
+        player.x = nx;
+        player.y = ny;
+        player.moving = true;
+    }
+}
+
     }
 
     // Smooth move
