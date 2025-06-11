@@ -86,7 +86,7 @@ const rooms = [
 const roomExits = [
     [ // Exits for Room 0
         {
-            x: 9, y: 3,
+            x: 9, y: 4,
             direction: "right",
             toRoom: 1,
             toX: 0, toY: 4
