@@ -97,7 +97,7 @@ const roomExits = [
             x: -1, y: 3,
             direction: "left",
             toRoom: 0,
-            toX: 10, toY: 3
+            toX: 9, toY: 3
         }
     ]
 ];
