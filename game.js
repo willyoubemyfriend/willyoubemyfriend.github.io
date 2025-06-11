@@ -267,6 +267,13 @@ function update() {
             const exits = roomExits[currentRoomIndex];
             const exit = exits.find(e => e.x === player.x && e.y === player.y);
             if (exit) {
+                // Immediately update player position to the new room's spawn point
+                player.x = exit.toX;
+                player.y = exit.toY;
+                player.px = player.x * TILE_SIZE;
+                player.py = player.y * TILE_SIZE;
+                
+                // Start transition
                 roomTransition.active = true;
                 roomTransition.direction = exit.direction;
                 roomTransition.progress = 0;
@@ -274,7 +281,7 @@ function update() {
                 roomTransition.toRoom = exit.toRoom;
                 roomTransition.playerStartX = exit.toX;
                 roomTransition.playerStartY = exit.toY;
-                roomTransition.roomGap = exit.roomgap || 0; // Use the exit's roomgap, default to 0 if not specified
+                roomTransition.roomGap = exit.roomgap || 0;
                 player.moving = false;
                 gameState.canMove = false;
             }
@@ -356,13 +363,14 @@ function draw() {
         const toX = dx * (offset - canvas.width - gap);
         const toY = dy * (offset - canvas.height - gap);
 
+        // Draw the rooms
         drawRoom(fromRoom, fromX, fromY);
         drawRoom(toRoom, toX, toY);
 
-        // Calculate player position during transition (in the toRoom)
-        let playerOffsetX = player.x * TILE_SIZE + toX;
-        let playerOffsetY = player.y * TILE_SIZE + toY;
-        ctx.drawImage(playerImg, playerOffsetX, playerOffsetY, TILE_SIZE, TILE_SIZE);
+        // Draw player in their final position in the new room
+        const playerX = roomTransition.playerStartX * TILE_SIZE + toX;
+        const playerY = roomTransition.playerStartY * TILE_SIZE + toY;
+        ctx.drawImage(playerImg, playerX, playerY, TILE_SIZE, TILE_SIZE);
 
     } else {
         // Normal room rendering
