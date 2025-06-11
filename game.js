@@ -56,18 +56,32 @@ assets.forEach(img => {
     };
 });
 
-// Map data
-const map = [
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,0],
-    [0,1,0,0,0,0,0,0,1,0],
-    [0,1,0,1,1,1,1,0,1,0],
-    [0,1,0,1,0,0,1,0,1,0],
-    [0,1,0,1,0,0,1,0,1,0],
-    [0,1,0,1,1,1,1,0,1,0],
-    [0,1,1,1,1,1,1,1,1,0],
-    [0,0,0,0,0,0,0,0,0,0]
+const rooms = [
+    [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,0],
+        [0,1,0,0,0,0,0,0,1,0],
+        [0,1,0,1,1,1,1,0,1,0],
+        [0,1,0,1,0,0,1,0,1,0],
+        [0,1,0,1,0,0,1,0,1,0],
+        [0,1,0,1,1,1,1,0,1,0],
+        [0,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0]
+    ],
+    [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,0,0,1,1,1,0],
+        [0,1,0,1,0,0,1,0,1,0],
+        [0,1,0,1,1,1,1,0,1,0],
+        [0,1,0,0,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,0,0]
+    ]
 ];
+
+let currentRoomIndex = 0;
 
 let gameState = {
     mode: 'overworld', // or 'inventory'
@@ -141,7 +155,7 @@ function changeInventoryPage(direction) {
 }
 
 function canMove(x, y) {
-    return map[y] && map[y][x] !== 0;
+    return rooms[currentRoomIndex][y] && rooms[currentRoomIndex][y][x] !== 0;
 }
 
 function update() {
@@ -213,7 +227,7 @@ function draw() {
 
     for (let y = 0; y < MAP_HEIGHT; y++) {
         for (let x = 0; x < MAP_WIDTH; x++) {
-            let tile = map[y][x];
+            let tile = rooms[currentRoomIndex][y][x];
             ctx.drawImage(tileset, tile * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
     }
