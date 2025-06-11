@@ -81,7 +81,7 @@ const rooms = [
     ]
 ];
 
-let currentRoomIndex = 0;
+let currentRoomIndex = 1;
 
 let gameState = {
     mode: 'overworld', // or 'inventory'
