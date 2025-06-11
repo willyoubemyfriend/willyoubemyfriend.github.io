@@ -296,19 +296,23 @@ function update() {
     if (roomTransition.active) {
         roomTransition.progress += roomTransition.speed;
 
-        if (roomTransition.progress >= canvas.width + roomTransition.roomGap) {
-            // Complete the transition
-            currentRoomIndex = roomTransition.toRoom;
-            player.x = roomTransition.playerStartX;
-            player.y = roomTransition.playerStartY;
-            player.px = player.x * TILE_SIZE;
-            player.py = player.y * TILE_SIZE;
-            player.moving = false;
-    
-            roomTransition.active = false;
-            gameState.canMove = true;
-        }
+            const isHorizontal = roomTransition.direction === "left" || roomTransition.direction === "right";
+            const transitionLimit = (isHorizontal ? canvas.width : canvas.height) + roomTransition.roomGap;
+
+            if (roomTransition.progress >= transitionLimit) {
+                // Complete the transition
+                currentRoomIndex = roomTransition.toRoom;
+                player.x = roomTransition.playerStartX;
+                player.y = roomTransition.playerStartY;
+                player.px = player.x * TILE_SIZE;
+                player.py = player.y * TILE_SIZE;
+                player.moving = false;
+
+                roomTransition.active = false;
+                gameState.canMove = true;
+              }
     }
+
 
     // Animation timers
     frameCounter++;
