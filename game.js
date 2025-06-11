@@ -120,7 +120,7 @@ const roomExits = [
     ],
     [ // Exits for Room 2
         {
-            x: 6, y: 10,
+            x: 6, y: 9,
             direction: "down",
             toRoom: 0,
             toX: 6, toY: 0
