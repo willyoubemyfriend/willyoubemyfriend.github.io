@@ -197,23 +197,6 @@ function update() {
                 dx === -1 ? "left" :
                 dy === 1 ? "down" :
                 dy === -1 ? "up" : "";
-
-    const exits = roomExits[currentRoomIndex];
-    const exit = exits.find(e => e.x === player.x && e.y === player.y && e.direction === dir);
-
-    if (exit) {
-        // Room change logic
-        currentRoomIndex = exit.toRoom;
-        player.x = exit.toX;
-        player.y = exit.toY;
-        player.px = player.x * TILE_SIZE;
-        player.py = player.y * TILE_SIZE;
-        player.moving = false; // no smooth movement needed
-    } else if (canMove(nx, ny)) {
-        // Regular move
-        player.x = nx;
-        player.y = ny;
-        player.moving = true;
     }
 }
 
@@ -233,6 +216,18 @@ function update() {
             player.px = tx;
             player.py = ty;
             player.moving = false;
+            const exits = roomExits[currentRoomIndex];
+            const exit = exits.find(e => e.x === player.x && e.y === player.y);
+            if (exit) {
+                // Room change logic
+                currentRoomIndex = exit.toRoom;
+                player.x = exit.toX;
+                player.y = exit.toY;
+                player.px = player.x * TILE_SIZE;
+                player.py = player.y * TILE_SIZE;
+                player.moving = false;
+            }
+
         }
     }
 
