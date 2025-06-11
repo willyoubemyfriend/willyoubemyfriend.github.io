@@ -355,8 +355,11 @@ function draw() {
         drawRoom(fromRoom, fromX, fromY);
         drawRoom(toRoom, toX, toY);
 
-        // Draw player in the fromRoom during transition
-        ctx.drawImage(playerImg, player.px + fromX, player.py + fromY, TILE_SIZE, TILE_SIZE);
+        // Calculate player position during transition (in the toRoom)
+        let playerOffsetX = player.x * TILE_SIZE + toX;
+        let playerOffsetY = player.y * TILE_SIZE + toY;
+        ctx.drawImage(playerImg, playerOffsetX, playerOffsetY, TILE_SIZE, TILE_SIZE);
+
     } else {
         // Normal room rendering
         drawRoom(rooms[currentRoomIndex], 0, 0);
