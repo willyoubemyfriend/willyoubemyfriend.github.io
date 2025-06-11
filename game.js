@@ -94,7 +94,7 @@ const roomExits = [
     ],
     [ // Exits for Room 1
         {
-            x: 0, y: 3,
+            x: -1, y: 3,
             direction: "left",
             toRoom: 0,
             toX: 10, toY: 3
