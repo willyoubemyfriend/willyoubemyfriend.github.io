@@ -86,10 +86,10 @@ const rooms = [
 const roomExits = [
     [ // Exits for Room 0
         {
-            x: 9, y: 4,
+            x: 9, y: 3,
             direction: "right",
             toRoom: 1,
-            toX: 0, toY: 4
+            toX: 0, toY: 3
         }
     ],
     [ // Exits for Room 1
@@ -97,7 +97,7 @@ const roomExits = [
             x: 0, y: 3,
             direction: "left",
             toRoom: 0,
-            toX: 10, toY: 4
+            toX: 10, toY: 3
         }
     ]
 ];
