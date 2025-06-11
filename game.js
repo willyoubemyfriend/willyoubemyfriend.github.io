@@ -101,13 +101,15 @@ const roomExits = [
             x: 10, y: 3,
             direction: "right",
             toRoom: 1,
-            toX: 0, toY: 3
+            toX: 0, toY: 3,
+            roomgap: 0
         },
         {
             x: 6, y: -1,
             direction: "up",
             toRoom: 2,
             toX: 6, toY: 8,
+            roomgap: 0
         }
     ],
     [ // Exits for Room 1
@@ -115,7 +117,8 @@ const roomExits = [
             x: -1, y: 3,
             direction: "left",
             toRoom: 0,
-            toX: 9, toY: 3
+            toX: 9, toY: 3,
+            roomgap: 0
         }
     ],
     [ // Exits for Room 2
@@ -123,7 +126,8 @@ const roomExits = [
             x: 6, y: 9,
             direction: "down",
             toRoom: 0,
-            toX: 6, toY: 0
+            toX: 6, toY: 0,
+            roomgap: 0
         }
     ]
 ];
@@ -270,6 +274,7 @@ function update() {
                 roomTransition.toRoom = exit.toRoom;
                 roomTransition.playerStartX = exit.toX;
                 roomTransition.playerStartY = exit.toY;
+                roomTransition.roomGap = exit.roomgap || 0; // Use the exit's roomgap, default to 0 if not specified
                 player.moving = false;
                 gameState.canMove = false;
             }
@@ -335,7 +340,6 @@ function draw() {
     if (roomTransition.active) {
         const offset = roomTransition.progress;
         const gap = roomTransition.roomGap;
-        roomTransition.roomGap = 0;
 
         const dir = roomTransition.direction;
         const fromRoom = rooms[roomTransition.fromRoom];
