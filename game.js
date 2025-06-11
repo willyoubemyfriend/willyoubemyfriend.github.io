@@ -192,14 +192,11 @@ function update() {
         let nx = player.x + dx;
         let ny = player.y + dy;
 
-        if ((dx !== 0 || dy !== 0)) {
-            const dir = dx === 1 ? "right" :
-                dx === -1 ? "left" :
-                dy === 1 ? "down" :
-                dy === -1 ? "up" : "";
-    }
-}
-
+        if ((dx !== 0 || dy !== 0) && canMove(nx, ny)) {
+            player.x = nx;
+            player.y = ny;
+            player.moving = true;
+        }
     }
 
     // Smooth move
@@ -216,10 +213,11 @@ function update() {
             player.px = tx;
             player.py = ty;
             player.moving = false;
+
+            // Exit check after movement completes
             const exits = roomExits[currentRoomIndex];
             const exit = exits.find(e => e.x === player.x && e.y === player.y);
             if (exit) {
-                // Room change logic
                 currentRoomIndex = exit.toRoom;
                 player.x = exit.toX;
                 player.y = exit.toY;
@@ -227,7 +225,6 @@ function update() {
                 player.py = player.y * TILE_SIZE;
                 player.moving = false;
             }
-
         }
     }
 
@@ -245,19 +242,21 @@ function update() {
             inventory.y += (inventory.y < inventory.targetY ? 1 : -1) * inventory.transitionSpeed;
         }
     }
+
+    // Animation timers
     frameCounter++;
-    if (frameCounter >= 14) {  // change frame every ~0.5s
+    if (frameCounter >= 14) {
         enemyFrame = (enemyFrame + 1) % 2;
         frameCounter = 0;
     }
 
-    enemyAnimTimer += 14; // ~1 frame at 60fps
+    enemyAnimTimer += 14;
     if (enemyAnimTimer >= enemyAnimInterval) {
         enemyAnimTimer = 0;
-        enemyAnimFrame = (enemyAnimFrame + 1) % 2; // Toggle between 0 and 1
+        enemyAnimFrame = (enemyAnimFrame + 1) % 2;
     }
-
 }
+
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
