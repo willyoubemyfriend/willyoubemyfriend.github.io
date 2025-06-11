@@ -215,7 +215,14 @@ function changeInventoryPage(direction) {
 }
 
 function canMove(x, y) {
-    return rooms[currentRoomIndex][y] && rooms[currentRoomIndex][y][x] !== 0;
+    // If tile is inside bounds and not 0, allow move
+    if (rooms[currentRoomIndex][y] && rooms[currentRoomIndex][y][x] !== undefined) {
+        return rooms[currentRoomIndex][y][x] !== 0;
+    }
+
+    // Check if this out-of-bounds position matches any defined exit
+    const exits = roomExits[currentRoomIndex];
+    return exits.some(e => e.x === x && e.y === y);
 }
 
 function update() {
