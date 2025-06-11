@@ -335,7 +335,7 @@ function draw() {
     if (roomTransition.active) {
         const offset = roomTransition.progress;
         const gap = roomTransition.roomGap;
-        roomTransition.roomGap = 32;
+        roomTransition.roomGap = 144;
 
         const dir = roomTransition.direction;
         const fromRoom = rooms[roomTransition.fromRoom];
