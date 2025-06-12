@@ -39,7 +39,7 @@ const playerStats = {
     defense: 5,
     dread: 15,
     location: "Ö CUM DUNGEON",
-    description: "YOU FEEL THE INTENSE DESIRE TO TAKE A SHIT."
+    description: "So cold, so cold, oh, so cold..."
 };
 
 const seenEnemies = Array(28).fill(true);  // all enemies start as not seen
